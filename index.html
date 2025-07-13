@@ -1,0 +1,195 @@
+<!-- Ian Christian F. Amistoso 
+     LFCA322A012 
+     IPT1 API PROJECT -->
+
+     <!DOCTYPE html>
+     <html lang="en">
+     <head>
+         <meta charset="UTF-8">
+         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <link rel="icon" href="API-logo.png" type="image/x-icon">
+         <title>WTF Dashboard - Weather, Trends & Facts</title>
+         
+         <!-- Google Fonts -->
+         <link rel="preconnect" href="https://fonts.googleapis.com">
+         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+         
+         <!-- Link to external CSS file -->
+         <link rel="stylesheet" href="style.css">
+     </head>
+     <body>
+         <!-- Notification Container for JS notifications -->
+         <div id="notification-container" aria-live="polite" style="position:fixed;top:0;left:0;width:100vw;z-index:9999;pointer-events:none;"></div>
+         <!-- Animated Background Elements -->
+         <div class="sun-container">
+             <div class="sun"></div>
+         </div>
+         
+         <div class="rain-container">
+             <!-- 40 rain drops -->
+             <div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div><div class="rain-drop"></div>
+         </div>
+         
+         <!-- Floating Clouds -->
+         <div class="cloud cloud-1"></div>
+         <div class="cloud cloud-2"></div>
+         <div class="cloud cloud-3"></div>
+         <div class="cloud cloud-4"></div>
+         <div class="cloud cloud-5"></div>
+         <div class="cloud cloud-6"></div>
+         <div class="cloud cloud-7"></div>
+         <div class="cloud cloud-8"></div>
+     
+         <!-- Main Container -->
+         <div class="app-container custom-max-width custom-center custom-padding">
+             <!-- Header Section -->
+             <header class="app-header custom-header-flex custom-header-padding">
+                 <div class="header-content custom-header-content">
+                     <div class="header-main">
+                         <div class="logo-section">
+                             <h1 class="app-title custom-title">
+                                 <img src="API-logo.png" alt="API Project Logo" class="logo-img" />
+                                 <span class="title-text">WTF Dashboard</span>            
+                             </h1>
+                             <p class="app-subtitle custom-subtitle">Weather, Trends & Facts</p>
+                         </div>
+                     </div>
+                     <div class="header-actions">
+                         <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+                             🌙
+                         </button>
+                     </div>
+                 </div>
+             </header>
+     
+             <!-- Main Content -->
+             <main class="main-content">
+             <!-- Weather Section -->
+                 <section class="content-section weather-section custom-section custom-mb">
+                     <div class="section-header">
+                         <h2 class="section-title custom-section-title">
+                             <span class="section-icon">💸</span>
+                             Weather Forecast
+                         </h2>
+                         <p class="section-subtitle custom-section-subtitle">Pera Sana ang Bumuhos, Hindi Ulan</p>
+                     </div>
+     
+                 <!-- Weather Search Input -->
+                     <div class="search-container">
+                         <div class="search-input-group" style="position:relative;">
+                             <input 
+                                 type="text" 
+                                 id="cityInput" 
+                                 placeholder="Enter city name..." 
+                                 class="search-input custom-input"
+                                 aria-label="Search city"
+                                 autocomplete="off"
+                                 onkeyup="autoCompleteCity(event)"
+                                 aria-autocomplete="list"
+                                 aria-controls="citySuggestions"
+                                 aria-expanded="false"
+                             >
+                             <button 
+                                 type="button"
+                                 class="clear-input-btn" 
+                                 id="clearCityInputBtn" 
+                                 aria-label="Clear input"
+                                 style="display:none;position:absolute;right:60px;top:50%;transform:translateY(-50%);background:none;border:none;font-size:1.2em;cursor:pointer;color:#aaa;z-index:2;"
+                                 tabindex="-1"
+                             >×</button>
+                             <button 
+                                 onclick="getWeather()" 
+                                 class="search-button custom-search-btn"
+                                 aria-label="Search weather"
+                                 type="button"
+                             >
+                                 <span class="button-icon">🔍</span>
+                                 <span class="button-text">Search</span>
+                     </button>
+                 </div>
+     
+                 <!-- Dropdown for City Suggestions -->
+                         <div id="citySuggestions" class="suggestions-dropdown"></div>
+                     </div>
+                 
+                 <!-- Weather Result Display -->
+                     <div id="weatherResult" class="weather-result"></div>
+             </section>
+     
+             <!-- News Section -->
+                 <section class="content-section news-section custom-section">
+                     <div class="section-header">
+                         <h2 class="section-title custom-section-title">
+                             <span class="section-icon">📰</span>
+                             Latest News
+                         </h2>
+                         <p class="section-subtitle custom-section-subtitle">Balitang Bigatin, Parang Utang Mo</p>
+                     </div>
+
+                     <!-- News Search -->
+                     <div class="search-container">
+                         <div class="search-input-group" style="position:relative;">
+                             <input 
+                                 type="text" 
+                                 id="newsInput" 
+                                 placeholder="Search news..." 
+                                 class="search-input custom-input"
+                                 aria-label="Search news"
+                             >
+                             <button 
+                                 onclick="searchNews()" 
+                                 class="search-button custom-search-btn"
+                                 aria-label="Search news"
+                                 type="button"
+                             >
+                                 <span class="button-icon">🔍</span>
+                                 <span class="button-text">Search</span>
+                             </button>
+                         </div>
+                     </div>
+     
+                 <!-- News Category Buttons -->
+                     <div class="category-tabs custom-tabs">
+                         <button onclick="fetchNews('general')" class="category-tab active custom-tab" data-category="general">
+                             <span class="tab-icon">📰</span>
+                             <span class="tab-text">General</span>
+                         </button>
+                         <button onclick="fetchNews('technology')" class="category-tab custom-tab" data-category="technology">
+                             <span class="tab-icon">💻</span>
+                             <span class="tab-text">Technology</span>
+                         </button>
+                         <button onclick="fetchNews('sports')" class="category-tab custom-tab" data-category="sports">
+                             <span class="tab-icon">⚽</span>
+                             <span class="tab-text">Sports</span>
+                         </button>
+                         <button onclick="fetchNews('business')" class="category-tab custom-tab" data-category="business">
+                             <span class="tab-icon">💼</span>
+                             <span class="tab-text">Business</span>
+                         </button>
+                         <button onclick="fetchNews('health')" class="category-tab custom-tab" data-category="health">
+                             <span class="tab-icon">🏥</span>
+                             <span class="tab-text">Health</span>
+                         </button>
+                 </div>
+     
+                 <!-- News Container -->
+                     <div id="newsContainer" class="news-container"></div>
+             </section>
+             </main>
+
+             <!-- Footer -->
+             <footer class="app-footer custom-footer">
+                 <div class="footer-content custom-footer-content">
+                    <p class="footer-text custom-footer-text">
+                        <img src="API-logo.png" alt="API Project Logo" class="footer-logo" />
+                        © Ian Christian Amistoso
+                    </p>
+                 </div>
+             </footer>
+         </div>
+         
+         <!-- JavaScript File -->
+         <script src="script.js"></script>
+     </body>
+     </html>
