@@ -162,7 +162,7 @@ The application is fully responsive with breakpoints for:
 
 **Ian Christian Amistoso**  
 🧑‍🎓 BSIT Student  
-🌐 Focus: Frontend Development & API Integration  
+🌐 Focus: Frontend Development
 🛠️ Tools: HTML, CSS, JS, Git/Github, REST APIs
 
 </details> 
