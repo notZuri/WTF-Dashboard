@@ -1,7 +1,3 @@
-<div align="center">
-  <img src="API-logo.png" alt="WTF Dashboard Logo" width="200" height="auto">
-</div>
-
 # 🌤️ WTF Dashboard - Weather, Trends & Facts📰
 
 A modern, responsive web application that combines real-time weather forecasting with live news aggregation. Built with vanilla JavaScript and modern CSS, this dashboard demonstrates advanced front-end development skills including API integration, responsive design, and progressive web app features.
