@@ -654,7 +654,7 @@ body::before {
 /* ===== Search Container ===== */
 .search-container {
     position: relative;
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
 }
 
 .search-input-group {
@@ -1008,7 +1008,7 @@ body::before {
     padding: var(--spacing-xl);
     box-shadow: var(--shadow-card);
     border: 1px solid var(--border-card);
-    transition: all var(--transition-normal);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     animation: fadeInUp 0.5s ease-out;
     position: relative;
     overflow: hidden;
@@ -1026,8 +1026,8 @@ body::before {
 }
 
 .news-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
     border-color: var(--primary-color);
 }
 
@@ -1596,4 +1596,215 @@ body::before {
         height: 1rem;
         margin-right: 0.2rem;
     }
+}
+
+.news-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.suggestions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+.clear-history {
+    background: none;
+    border: none;
+    color: var(--error-color);
+    cursor: pointer;
+    font-size: 0.75rem;
+    padding: var(--spacing-xs);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+}
+
+.clear-history:hover {
+    background: var(--error-color);
+    color: var(--text-inverse);
+}
+
+.history-item {
+    background: var(--primary-light);
+    border-left: 3px solid var(--primary-color);
+}
+
+.suggestion-type {
+    font-size: 0.625rem;
+    color: var(--primary-color);
+    background: var(--primary-light);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+}
+
+.suggestion-hint {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.loading {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.no-results {
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.error {
+    color: var(--error-color);
+}
+
+.news-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    z-index: 1001;
+    margin-top: var(--spacing-xs);
+    backdrop-filter: blur(10px);
+}
+
+.news-suggestion-item {
+    padding: var(--spacing-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.news-suggestion-item:hover {
+    background: var(--primary-light);
+    transform: translateX(4px);
+}
+
+.suggestion-title {
+    font-weight: 500;
+    color: var(--text-primary);
+    flex: 1;
+}
+
+.suggestion-source {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background: var(--bg-secondary);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+}
+
+.weather-actions {
+    margin-top: var(--spacing-lg);
+    text-align: center;
+}
+
+.refresh-button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    font-size: 0.875rem;
+}
+
+.refresh-button:hover {
+    background: var(--primary-color);
+    color: var(--text-inverse);
+    transform: scale(1.05);
+}
+
+.news-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--spacing-xs);
+}
+
+.news-time-ago {
+    font-size: 0.625rem;
+    color: var(--text-muted);
+    background: var(--bg-tertiary);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+}
+
+.error-card {
+    border-color: var(--error-color);
+}
+
+.error-card .error-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: var(--spacing-md);
+}
+
+.error-suggestions, .no-results-suggestions {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.error-suggestions ul, .no-results-suggestions ul {
+    margin-top: var(--spacing-sm);
+    padding-left: var(--spacing-lg);
+}
+
+.error-suggestions li, .no-results-suggestions li {
+    margin-bottom: var(--spacing-xs);
+    color: var(--text-secondary);
+}
+
+.weather-card.clear {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);
+}
+
+.weather-card.cloudy {
+    background: linear-gradient(135deg, rgba(100, 113, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+}
+
+.weather-card.rainy {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.1) 100%);
+}
+
+.weather-card.stormy {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.1) 100%);
+}
+
+.weather-card.snowy {
+    background: linear-gradient(135deg, rgba(156, 163, 175, 0.1) 0%, rgba(107, 114, 128, 0.1) 100%);
+}
+
+.weather-card.misty, .weather-card.foggy {
+    background: linear-gradient(135deg, rgba(156, 163, 175, 0.1) 0%, rgba(75, 85, 99, 0.1) 100%);
+}
+
+/* Add a higher z-index to the weather section to ensure it stacks above the news section */
+.weather-section {
+    z-index: 2;
 }

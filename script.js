@@ -179,13 +179,13 @@ function addToSearchHistory(city) {
 }
 
 // Enhanced Autocomplete Function for City Search
-async function autoCompleteCity(event) {
-    const query = document.getElementById("cityInput").value.trim();
+function autoCompleteCity() {
+    const query = document.getElementById("cityInput").value.trim().toLowerCase();
     const suggestionsContainer = document.getElementById("citySuggestions");
-    document.getElementById('cityInput').setAttribute('aria-expanded', query.length >= 2 ? 'true' : 'false');
-    if (event && (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter' || event.key === 'Escape')) return;
+    document.getElementById('cityInput').setAttribute('aria-expanded', query.length > 0 ? 'true' : 'false');
     citySuggestionIndex = -1;
-    if (query.length < 2) { 
+
+    if (!query) {
         if (searchHistory.length > 0) {
             showSearchHistory();
         } else {
@@ -194,39 +194,29 @@ async function autoCompleteCity(event) {
         return;
     }
 
-    // Show loading state
-    suggestionsContainer.innerHTML = '<div class="suggestion-item loading">Searching cities...</div>';
+    const filteredCities = philippineCities.filter(city => 
+        city.toLowerCase().startsWith(query)
+    );
 
-    try {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/find?q=${query},PH&appid=${weatherApiKey}`);
-        const data = await response.json();
-
-        if (data.list && data.list.length > 0) { 
-            const suggestions = data.list.slice(0, 8).map((city, idx) => {
-                const isInHistory = searchHistory.includes(city.name);
-                return `<div onclick="selectCity('${city.name}, ${city.sys.country}')" class="suggestion-item${isInHistory ? ' history-item' : ''}" tabindex="0" role="option" aria-selected="false" data-index="${idx}">
-                    <span class="suggestion-city">${city.name}</span>
-                    <span class="suggestion-country">${city.sys.country}</span>
-                    ${isInHistory ? '<span class="suggestion-type">Recent</span>' : ''}
-                </div>`;
-            }).join('');
-            suggestionsContainer.innerHTML = suggestions;
-        } else {
-            suggestionsContainer.innerHTML = `
-                <div class="suggestion-item no-results" tabindex="-1">
-                    <span class="suggestion-city">No cities found</span>
-                    <span class="suggestion-hint">Try a different spelling</span>
-                </div>`;
-        }
-    } catch (error) {
-        console.error("Error fetching city suggestions:", error);
+    if (filteredCities.length > 0) {
+        const suggestions = filteredCities.slice(0, 8).map((city, idx) => {
+            const isInHistory = searchHistory.includes(city);
+            return `<div onclick="selectCity('${city}, PH')" class="suggestion-item${isInHistory ? ' history-item' : ''}" tabindex="0" role="option" aria-selected="false" data-index="${idx}">
+                <span class="suggestion-city">${city}</span>
+                <span class="suggestion-country">PH</span>
+                ${isInHistory ? '<span class="suggestion-type">Recent</span>' : ''}
+            </div>`;
+        }).join('');
+        suggestionsContainer.innerHTML = suggestions;
+    } else {
         suggestionsContainer.innerHTML = `
-            <div class="suggestion-item error" tabindex="-1">
-                <span class="suggestion-city">Error loading suggestions</span>
-                <span class="suggestion-hint">Please try again</span>
+            <div class="suggestion-item no-results" tabindex="-1">
+                <span class="suggestion-city">No Philippine cities found starting with "${query}"</span>
+                <span class="suggestion-hint">Try a different spelling</span>
             </div>`;
     }
 }
+
 
 // Select a City from Suggestions
 function selectCity(cityName) {
@@ -621,208 +611,3 @@ function showNotification(message, type = 'info') {
         }, 400);
     }, 2600);
 }
-
-// Add enhanced styles to CSS
-const enhancedStyles = `
-.suggestions-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: var(--spacing-sm) var(--spacing-md);
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border-color);
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: var(--text-muted);
-}
-
-.clear-history {
-    background: none;
-    border: none;
-    color: var(--error-color);
-    cursor: pointer;
-    font-size: 0.75rem;
-    padding: var(--spacing-xs);
-    border-radius: var(--radius-sm);
-    transition: all var(--transition-fast);
-}
-
-.clear-history:hover {
-    background: var(--error-color);
-    color: var(--text-inverse);
-}
-
-.history-item {
-    background: var(--primary-light);
-    border-left: 3px solid var(--primary-color);
-}
-
-.suggestion-type {
-    font-size: 0.625rem;
-    color: var(--primary-color);
-    background: var(--primary-light);
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: var(--radius-sm);
-    font-weight: 500;
-}
-
-.suggestion-hint {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    font-style: italic;
-}
-
-.loading {
-    color: var(--text-muted);
-    font-style: italic;
-}
-
-.no-results {
-    color: var(--text-muted);
-    text-align: center;
-}
-
-.error {
-    color: var(--error-color);
-}
-
-.news-suggestions {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-xl);
-    z-index: 1000;
-    margin-top: var(--spacing-xs);
-    backdrop-filter: blur(10px);
-}
-
-.news-suggestion-item {
-    padding: var(--spacing-md);
-    cursor: pointer;
-    transition: all var(--transition-fast);
-    border-bottom: 1px solid var(--border-color);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.news-suggestion-item:hover {
-    background: var(--primary-light);
-    transform: translateX(4px);
-}
-
-.suggestion-title {
-    font-weight: 500;
-    color: var(--text-primary);
-    flex: 1;
-}
-
-.suggestion-source {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    background: var(--bg-secondary);
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: var(--radius-sm);
-}
-
-.weather-actions {
-    margin-top: var(--spacing-lg);
-    text-align: center;
-}
-
-.refresh-button {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-sm) var(--spacing-md);
-    background: var(--bg-secondary);
-    color: var(--text-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: all var(--transition-normal);
-    font-size: 0.875rem;
-}
-
-.refresh-button:hover {
-    background: var(--primary-color);
-    color: var(--text-inverse);
-    transform: scale(1.05);
-}
-
-.news-meta {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: var(--spacing-xs);
-}
-
-.news-time-ago {
-    font-size: 0.625rem;
-    color: var(--text-muted);
-    background: var(--bg-tertiary);
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: var(--radius-sm);
-}
-
-.error-card {
-    border-color: var(--error-color);
-}
-
-.error-card .error-icon {
-    font-size: 3rem;
-    display: block;
-    margin-bottom: var(--spacing-md);
-}
-
-.error-suggestions, .no-results-suggestions {
-    margin-top: var(--spacing-md);
-    padding: var(--spacing-md);
-    background: var(--bg-secondary);
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border-color);
-}
-
-.error-suggestions ul, .no-results-suggestions ul {
-    margin-top: var(--spacing-sm);
-    padding-left: var(--spacing-lg);
-}
-
-.error-suggestions li, .no-results-suggestions li {
-    margin-bottom: var(--spacing-xs);
-    color: var(--text-secondary);
-}
-
-.weather-card.clear {
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);
-}
-
-.weather-card.cloudy {
-    background: linear-gradient(135deg, rgba(100, 113, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-}
-
-.weather-card.rainy {
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.1) 100%);
-}
-
-.weather-card.stormy {
-    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.1) 100%);
-}
-
-.weather-card.snowy {
-    background: linear-gradient(135deg, rgba(156, 163, 175, 0.1) 0%, rgba(107, 114, 128, 0.1) 100%);
-}
-
-.weather-card.misty, .weather-card.foggy {
-    background: linear-gradient(135deg, rgba(156, 163, 175, 0.1) 0%, rgba(75, 85, 99, 0.1) 100%);
-}
-`;
-
-// Inject enhanced styles
-const enhancedStyleSheet = document.createElement("style");
-enhancedStyleSheet.textContent = enhancedStyles;
-document.head.appendChild(enhancedStyleSheet);

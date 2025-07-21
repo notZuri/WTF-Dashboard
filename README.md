@@ -10,7 +10,7 @@ A modern, responsive web application that combines real-time weather forecasting
 
 ## 🔑 Key Features
 
-- 🌤️ **Real-time Weather**: Search any city with autocomplete and comprehensive weather data
+- 🌤️ **Real-time Weather**: Search any city with instant autocomplete and comprehensive weather data, powered by a local city database for offline-capable searching.
 - 📰 **News Aggregation**: Browse news by category or search trending topics
 - 🎨 **Responsive Design**: Fully functional on mobile, tablet, desktop
 - 🌙 **Theme System**: Dark/light mode with persistent storage
@@ -25,7 +25,7 @@ A modern, responsive web application that combines real-time weather forecasting
 ## 🌤️ Weather Module
 
 - **Real-time Weather Data**: Get current weather conditions for any city worldwide
-- **Smart Search System**: Autocomplete functionality with search history persistence
+- **Smart Search System**: Instant autocomplete powered by a local city database
 - **Comprehensive Weather Info**: Temperature, humidity, wind speed, pressure, visibility
 - **Dynamic Weather Styling**: Condition-based visual themes (sunny, rainy, stormy, etc.)
 - **Error Handling**: Graceful fallbacks for invalid cities and network issues
@@ -69,6 +69,7 @@ A modern, responsive web application that combines real-time weather forecasting
 - **OpenWeatherMap API**: Real-time weather data
 - **GNews API**: Latest news articles
 - **Local Storage**: User preferences and search history
+- **Local City Data**: Instant city suggestions for the search bar
 
 ### Design & UX:
 - **Responsive Design**: Mobile-first approach
@@ -85,84 +86,8 @@ API Project/
 ├── index.html         # Main HTML file with semantic structure
 ├── style.css          # Custom CSS with CSS variables and animations
 ├── script.js          # JavaScript logic with ES6+ features
+├── philippine-cities.js # Local data for city autocomplete
 ├── API-logo.png       # Project logo and branding
 ├── sky.jpg            # Background asset
 └── README.md          # Project documentation
 ```
-
----
-
-## 🧪 How to Run
-
-### Option 1: Direct View
-1. Download project files  
-2. Open `index.html` in browser
-
-### Option 2: Local Dev Server
-```bash
-# Python 3
-python -m http.server 8000
-
-# Or Node.js (if installed)
-npx http-server
-```
-
----
-
-## 📱 Responsive Design
-
-The application is fully responsive with breakpoints for:
-- **Desktop (900px+)**: Full layout with optimal spacing
-- **Tablet (768px-900px)**: Adjusted padding and font sizes
-- **Mobile (600px-768px)**: Stacked header layout
-- **Small Mobile (600px-)**: Compact layout with minimal padding
-
----
-
-## 🔧 Customization Tips
-
-- **API Keys**: Replace demo keys with your own from OpenWeatherMap and GNews
-- **Styling**: Edit CSS variables in `style.css` for easy theme customization
-- **Animations**: Adjust animation durations and effects in CSS
-- **Branding**: Replace `API-logo.png` and `sky.jpg` with your own assets
-
----
-
-## 🔐 Security Features
-
-- **API Security**: Proper error handling and rate limiting
-- **XSS Prevention**: Sanitized content rendering
-- **External Links**: Proper `rel="noopener noreferrer"` attributes
-- **Accessibility**: WCAG compliance considerations
-- **Performance**: Optimized loading and rendering
-
----
-
-## 🎯 Future Enhancements
-
-- **Progressive Web App (PWA)**: Offline support and app-like experience
-- **Weather Alerts**: Notifications for severe weather conditions
-- **News Bookmarking**: Save and organize favorite articles
-- **Advanced Weather Charts**: Visual weather data representation
-- **Social Sharing**: Share weather and news on social platforms
-- **Weather Maps**: Interactive map integration
-- **Email Notifications**: Daily weather and news digests
-
----
-
-## 🐛 Known Issues & Limitations
-
-- API rate limits may apply with demo keys
-- Some weather icons may not display on older browsers
-- News API has daily request limits
-
----
-
-## 👨‍💻 About the Developer
-
-**Ian Christian Amistoso**  
-🧑‍🎓 BSIT Student  
-🌐 Focus: Frontend Development
-🛠️ Tools: HTML, CSS, JS, Git/Github, REST APIs
-
-</details> 
