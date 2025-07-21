@@ -19,19 +19,33 @@ document.addEventListener('DOMContentLoaded', function() {
     fetchNews('general');
     setupEventListeners();
     loadSearchHistory();
-    // Clear input button logic
+
+    // Clear input button logic for weather search
     const cityInput = document.getElementById('cityInput');
-    const clearBtn = document.getElementById('clearCityInputBtn');
+    const clearCityBtn = document.getElementById('clearCityInputBtn');
     cityInput.addEventListener('input', function() {
-        clearBtn.style.display = cityInput.value ? 'block' : 'none';
+        clearCityBtn.style.display = cityInput.value ? 'block' : 'none';
     });
-    clearBtn.addEventListener('click', function() {
+    clearCityBtn.addEventListener('click', function() {
         cityInput.value = '';
-        clearBtn.style.display = 'none';
+        clearCityBtn.style.display = 'none';
         document.getElementById('citySuggestions').innerHTML = '';
         cityInput.focus();
         showSearchHistory();
     });
+
+    // Clear input button logic for news search
+    const newsInput = document.getElementById('newsInput');
+    const clearNewsBtn = document.getElementById('clearNewsInputBtn');
+    newsInput.addEventListener('input', function() {
+        clearNewsBtn.style.display = newsInput.value ? 'block' : 'none';
+    });
+    clearNewsBtn.addEventListener('click', function() {
+        newsInput.value = '';
+        clearNewsBtn.style.display = 'none';
+        newsInput.focus();
+    });
+
     // Keyboard navigation for autocomplete
     cityInput.addEventListener('keydown', handleCityAutocompleteKeydown);
 });
