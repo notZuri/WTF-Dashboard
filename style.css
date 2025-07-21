@@ -675,6 +675,7 @@ body::before {
     transition: all var(--transition-normal);
     outline: none;
     box-shadow: var(--shadow-sm);
+    padding-right: 2.2em; /* Make space for the clear button */
 }
 
 .search-input:focus {
@@ -787,24 +788,26 @@ body::before {
 }
 
 .clear-input-btn {
-    display: none;
     position: absolute;
-    right: 60px;
+    right: 140px; 
     top: 50%;
     transform: translateY(-50%);
     background: none;
     border: none;
-    font-size: 1.2em;
+    font-size: 1.3em;
+    color: #e53935;
     cursor: pointer;
-    color: #aaa;
-    z-index: 2;
-    padding: 0 6px;
+    z-index: 3;
+    padding: 0 4px;
+    line-height: 1;
     border-radius: 50%;
-    transition: background 0.2s;
+    transition: background 0.2s, color 0.2s;
+    display: none; /* JS toggles this */
 }
 .clear-input-btn:hover, .clear-input-btn:focus {
-    background: #eee;
-    color: #555;
+    background: rgba(229,57,53,0.08);
+    color: #b71c1c; /* Material Red 900 */
+    outline: none;
 }
 .suggestion-item.focused, .suggestion-item[aria-selected="true"] {
     background: var(--primary-light);
